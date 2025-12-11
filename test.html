@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Landing</title>
+    <style>
+      :root {
+        --bg1: #071426;
+        --bg2: #0f2b4a;
+        --accent: #6ee7b7;
+        --accent2: #9b6eff;
+        --muted: rgba(255, 255, 255, 0.75);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+      }
+      body {
+        background: radial-gradient(
+            ellipse at 10% 10%,
+            rgba(155, 110, 255, 0.09),
+            transparent 10%
+          ),
+          radial-gradient(
+            ellipse at 90% 90%,
+            rgba(110, 231, 183, 0.06),
+            transparent 10%
+          ),
+          linear-gradient(120deg, var(--bg1) 0%, var(--bg2) 100%);
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      /* Container */
+      .hero {
+        width: 100%;
+        max-width: 1100px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 48px;
+        border-radius: 18px;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* decorative floating shapes */
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        filter: blur(40px);
+        opacity: 0.6;
+        mix-blend-mode: screen;
+      }
+      .hero::before {
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          var(--accent),
+          transparent 40%
+        );
+        right: -120px;
+        top: -120px;
+      }
+      .hero::after {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle at 70% 70%,
+          var(--accent2),
+          transparent 40%
+        );
+        left: -100px;
+        bottom: -100px;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 24px;
+        align-items: center;
+      }
+
+      /* Left column */
+      .headline {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.02;
+        margin: 0 0 12px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .headline .neon {
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 18px rgba(155, 110, 255, 0.12),
+          0 6px 24px rgba(2, 6, 23, 0.5);
+      }
+
+      /* Rotating words */
+      .sub {
+        font-size: 20px;
+        color: var(--muted);
+        margin: 0 0 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .rotator {
+        font-weight: 600;
+        color: #fff;
+        position: relative;
+        height: 28px;
+        overflow: hidden;
+      }
+      .rotator span {
+        position: absolute;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        transform: translateY(100%);
+        animation: rotateWords 9s linear infinite;
+      }
+      .rotator span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .rotator span:nth-child(2) {
+        animation-delay: 3s;
+      }
+      .rotator span:nth-child(3) {
+        animation-delay: 6s;
+      }
+      @keyframes rotateWords {
+        0% {
+          opacity: 0;
+          transform: translateY(100%);
+        }
+        8% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        30% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        38% {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* Typewriter effect */
+      .typewrap {
+        display: block;
+        font-size: 18px;
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      .type {
+        display: inline-block;
+        border-right: 2px solid rgba(255, 255, 255, 0.12);
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 5s steps(30, end) infinite, blink 1s step-end infinite;
+      }
+      @keyframes typing {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 100%;
+        }
+        100% {
+          width: 0;
+        }
+      }
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* CTA */
+      .cta {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        color: #052;
+        box-shadow: 0 8px 30px rgba(107, 59, 255, 0.16);
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .cta:hover {
+        transform: translateY(-3px);
+        transition: transform 0.18s ease;
+      }
+
+      /* Right card */
+      .card {
+        height: 220px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 12px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .card h3 {
+        margin: 6px 0 0;
+        font-size: 18px;
+      }
+      .badge {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: 600;
+        color: var(--muted);
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      /* small footer note */
+      .note {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+        margin-top: 18px;
+      }
+
+      /* responsive */
+      @media (max-width: 880px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+        .card {
+          order: -1;
+          margin-bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="hero">
+      <div class="content">
+        <div class="left">
+          <h1 class="headline">
+            Welcome to <span class="neon">Luma</span> — where ideas shine
+          </h1>
+
+          <p class="sub">
+            We build
+            <span class="rotator" aria-hidden="true">
+              <span>beautiful interfaces</span>
+              <span>delightful animations</span>
+              <span>fast experiences</span>
+            </span>
+          </p>
+
+          <div class="typewrap" aria-live="polite">
+            <span class="type"
+              >Simple. Fast. Delightful — crafted with care and motion.</span
+            >
+          </div>
+
+          <a class="cta" href="#" role="button">Get started — it's free</a>
+
+          <p class="note">
+            Tip: change the rotating words or colors in the CSS to customize the
+            vibe.
+          </p>
+        </div>
+
+        <aside class="card" aria-hidden="false">
+          <div class="badge">New • 2025</div>
+          <h3>Motion-first components</h3>
+          <p
+            style="
+              color: var(--muted);
+              text-align: center;
+              margin: 10px 0 0;
+              font-size: 14px;
+            "
+          >
+            Prebuilt text effects: neon, typewriter, and rotating words — drop
+            them into any page.
+          </p>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      // Accessibility: expose current rotating word to screen readers
+      (function () {
+        const rotator = document.querySelector(".rotator");
+        if (!rotator) return;
+        const sr = document.createElement("div");
+        sr.setAttribute("aria-live", "polite");
+        sr.setAttribute(
+          "style",
+          "position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;"
+        );
+        rotator.parentNode.appendChild(sr);
+
+        const words = Array.from(rotator.querySelectorAll("span")).map(
+          (s) => s.textContent
+        );
+        let i = 0;
+        sr.textContent = words[i];
+        setInterval(() => {
+          i = (i + 1) % words.length;
+          sr.textContent = words[i];
+        }, 3000);
+      })();
+    </script>
+  </body>
+</html>
